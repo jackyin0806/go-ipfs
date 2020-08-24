@@ -37,11 +37,12 @@ func constructDHTRouting(mode dht.ModeOpt) func(
 	) (routing.Routing, error) {
 		return dual.New(
 			ctx, host,
+			dual.DHTOption(
 			dht.Concurrency(10),
 			dht.Mode(mode),
 			dht.Datastore(dstore),
-			dht.Validator(validator),
-			dht.BootstrapPeers(bootstrapPeers...),
+			dht.Validator(validator)),
+			dual.WanDHTOption(dht.BootstrapPeers(bootstrapPeers...)),
 		)
 	}
 }
